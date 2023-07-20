@@ -66,7 +66,7 @@ const handler: Handler = async (
         },
       },
       {
-        idempotencyKey: body.idempotencyKey,
+        idempotencyKey: body.idempotencyKey + "-email",
       }
     );
     responses.push(requestId);
@@ -89,7 +89,7 @@ const handler: Handler = async (
         },
       },
       {
-        idempotencyKey: body.idempotencyKey,
+        idempotencyKey: body.idempotencyKey + "-sms",
       }
     );
     responses.push(requestId);
