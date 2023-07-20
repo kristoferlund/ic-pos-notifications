@@ -31,6 +31,9 @@ const handler: Handler = async (
 
   const body: requestBody = JSON.parse(event.body);
 
+  let amount = Number.parseInt(body.amount);
+  amount = amount * Math.pow(10, -9);
+
   const courier = CourierClient({
     authorizationToken: process.env.COURIER_AUTH_TOKEN,
   });
@@ -43,7 +46,7 @@ const handler: Handler = async (
         },
         template: "WJKFSV1362MGZEHW9G7EMMPZDMMW",
         data: {
-          amount: body.amount,
+          amount: amount.toFixed(9),
           payer: body.payer,
         },
       },
