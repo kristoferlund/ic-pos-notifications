@@ -13,7 +13,7 @@ const handler: Handler = async (
   event: HandlerEvent,
   context: HandlerContext
 ) => {
-  console.log(event);
+  console.log(`${event.httpMethod} - ${event.path} - ${event.body}`);
 
   if (event.httpMethod !== "POST") {
     return {
@@ -35,22 +35,25 @@ const handler: Handler = async (
     authorizationToken: process.env.COURIER_AUTH_TOKEN,
   });
 
-  const { requestId } = await courier.send({
-    headers: {
-      "Content-Type": "application/json",
-      "Idempotency-Key": body.idempotencyKey,
-    },
-    message: {
-      to: {
-        email: body.email,
-      },
-      template: "WJKFSV1362MGZEHW9G7EMMPZDMMW",
-      data: {
-        amount: body.amount,
-        payer: body.payer,
+  const { requestId } = await courier.send(
+    {
+      message: {
+        to: {
+          email: body.email,
+        },
+        template: "WJKFSV1362MGZEHW9G7EMMPZDMMW",
+        data: {
+          amount: body.amount,
+          payer: body.payer,
+        },
       },
     },
-  });
+    {
+      idempotencyKey: body.idempotencyKey,
+    }
+  );
+
+  console.log(`Email sent with requestId: ${requestId}`);
 
   return {
     statusCode: 200,
