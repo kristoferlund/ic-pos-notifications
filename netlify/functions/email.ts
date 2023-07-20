@@ -13,6 +13,8 @@ const handler: Handler = async (
   event: HandlerEvent,
   context: HandlerContext
 ) => {
+  console.log(event);
+
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
