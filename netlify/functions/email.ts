@@ -3,6 +3,7 @@ import type { Handler, HandlerContext, HandlerEvent } from "@netlify/functions";
 import { CourierClient } from "@trycourier/courier";
 
 type requestBody = {
+  idempotencyKey: string;
   email: string;
   amount: string;
   payer: string;
@@ -33,6 +34,10 @@ const handler: Handler = async (
   });
 
   const { requestId } = await courier.send({
+    headers: {
+      "Content-Type": "application/json",
+      "Idempotency-Key": body.idempotencyKey,
+    },
     message: {
       to: {
         email: body.email,
