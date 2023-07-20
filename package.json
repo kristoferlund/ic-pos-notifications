@@ -1,0 +1,19 @@
+{
+  "name": "ic-pos-notifications",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@netlify/functions": "^1.6.0",
+    "@trycourier/courier": "^4.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.2"
+  }
+}
